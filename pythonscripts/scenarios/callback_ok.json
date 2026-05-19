@@ -1,0 +1,9 @@
+{
+  "name": "Callback - customer says ok instead of yes",
+  "salutation": "",
+  "inputs": ["busy", "ok"],
+  "expected": [
+    "Okay, shall I call later?",
+    "Sure, we will call later. Thank you."
+  ]
+}

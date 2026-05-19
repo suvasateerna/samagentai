@@ -1,0 +1,10 @@
+{
+  "name": "Callback - customer gives specific time",
+  "salutation": "",
+  "inputs": ["busy", "no", "tomorrow 10pm"],
+  "expected": [
+    "Okay, shall I call later?",
+    "Okay, please let us know a suitable time.",
+    "Sure, we will call you tomorrow 10pm. Thank you."
+  ]
+}

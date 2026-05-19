@@ -1,0 +1,72 @@
+a user drives to petrol bunk/parking lot
+a representative of gaadisaathi is positioned there with a pos machine connected to internet
+the gaadi saathi representative enters the vehicle number into pos
+pos
+calls gaadisaathi api by passing entered vehicle number
+
+if details found retrieves data
+else
+hits the signz api retrieves data
+if no details found in both the api calls displays no data
+else
+analyse the data and displays the same on the pos
+gets input from gaadisaathi representative to proceed with print
+
+if yes
+	create unique QR code
+	print
+if no
+	display screen to enter vehicle number
+
+
+analyse data
+
+1. Fitness Certificate (FC) expiry date 
+
+2. Insurance Policy expiry date
+
+3. Hypothecation tag 
+
+4. Manufacturer Name & Vehicle Class: is it Correctly captured.
+
+5. Emission Test Expiry
+
+6. NOC/NTBT/Blacklist Status 
+
+7. HSRP status
+
+8. Pending Traffic Fines
+
+
+
+create unique QR code
+refer to https://doc.gaadisaathi.com/
+when details are entered, it generates data in the following format
+
+"*Customer Information* Name: abc Mobile: 9999999999 Vehicle No: KA02EU5482 Referred By: Kiran motor works *Vehicle Details* Model: HONDA MOTORCYCLE AND SCOOTER INDIA (P) LTD HONDA ACTIVA Class: M-Cycle/Scooter(2WN) Age: 20 Years, 2 Months *Identified Issues / Pending Checks* - NOC Status:   Yet to Check. - NOC Penalty:   NOC Status yet to be checked - Blacklist / NTBT:   Yet to Check. - Emission (PUC):   Yet to Check. *Action Request:*   I have received my document check report given below and I’m satisfied with it"
+
+and gives a button to click on opening WhatsApp
+it opens a window in WhatsApp with the message to be sent to mobile number 7625066958 (hardcoded)
+and has the following
+*Customer Information*
+Name: abc
+Mobile: 9999999999
+Vehicle No: KA02EU5482
+Referred By: Kiran motor works
+
+*Vehicle Details*
+Model: HONDA MOTORCYCLE AND SCOOTER INDIA (P) LTD HONDA ACTIVA
+Class: M-Cycle/Scooter(2WN)
+Age: 20 Years, 2 Months
+
+*Identified Issues / Pending Checks*
+* NOC Status:   Yet to Check.
+* NOC Penalty:   NOC Status yet to be checked
+* Blacklist / NTBT:   Yet to Check.
+* Emission (PUC):   Yet to Check.
+
+*Action Request:*   I have received my document check report given below and I’m satisfied with it
+
+the user simply has to hit send.
+
+

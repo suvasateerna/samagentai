@@ -1,0 +1,9 @@
+{
+  "name": "Customer asks who called and vehicle number",
+  "salutation": "",
+  "inputs": ["who are you", "what is my vehicle"],
+  "expected": [
+    "You had done emission test earlier from our side.",
+    "KA01AB1234"
+  ]
+}

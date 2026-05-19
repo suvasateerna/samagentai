@@ -1,0 +1,6 @@
+﻿__pycache__/
+*.pyc
+private vapi key.txt
+.env
+venv/
+.venv/
