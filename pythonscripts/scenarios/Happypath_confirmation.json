@@ -1,0 +1,18 @@
+{
+  "name": "Happy path - customer confirms immediately",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "KA01AB1234",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": true,
+  "turns": [
+    {
+      "user": "yes",
+      "expect_reply": "Thank you. We will send you the details shortly.",
+      "expect_state": "DONE"
+    }
+  ]
+}

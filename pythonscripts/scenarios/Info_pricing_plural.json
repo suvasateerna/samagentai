@@ -1,0 +1,18 @@
+{
+  "name": "INFO_REQUEST_PRICING_PLURAL_VARIANT",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "KA01AB1234",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": false,
+  "turns": [
+    {
+      "user": "what are the charges?",
+      "expect_reply": "We'll confirm exact amount when you visit.",
+      "expect_state": "INITIAL"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "INFO_REQUEST_DURATION",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": false,
+  "turns": [
+    {
+      "user": "how long does it take",
+      "expect_reply": "Normally 10\u201315 minutes only if crowd is less.",
+      "expect_state": "INITIAL"
+    }
+  ]
+}

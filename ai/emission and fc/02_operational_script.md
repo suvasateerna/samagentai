@@ -465,13 +465,9 @@ This section MUST ONLY be used if:
 
 > “How much charge?”
 
-#### If Pricing Available
+#### Pricing
 
-> “For {vehicle_type}, charge is around ₹{service_price}.”
-
-#### If Pricing Unavailable
-
-> “Depends on vehicle type. We’ll check once you come.”
+> “We'll confirm exact amount when you visit.”
 
 ---
 
@@ -519,7 +515,7 @@ This section MUST ONLY be used if:
 
 > “Send location.”
 
-> “Okay, we’ll send on WhatsApp.”
+> “Our team will share the location details with you after the call.”
 
 ---
 
@@ -541,7 +537,7 @@ This section MUST ONLY be used if:
 
 > “What documents needed?”
 
-> “RC copy enough usually.”
+> “No documents required.”
 
 ---
 

@@ -1,0 +1,33 @@
+{
+  "name": "INFO_REQUEST_MULTI_INTERRUPT_CONFIRMATION",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "KA01AB1234",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": true,
+  "turns": [
+    {
+      "user": "why are you calling",
+      "expect_reply": "Pollution certificate only\u2026 emission test renewal.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "how long does it take",
+      "expect_reply": "Normally 10\u201315 minutes only if crowd is less.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "what is the charge",
+      "expect_reply": "We'll confirm exact amount when you visit.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "okay",
+      "expect_reply": "Thank you. We will send you the details shortly.",
+      "expect_state": "DONE"
+    }
+  ]
+}

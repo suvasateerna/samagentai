@@ -1,9 +1,23 @@
 {
   "name": "Customer asks who called and vehicle number",
-  "salutation": "",
-  "inputs": ["who are you", "what is my vehicle"],
-  "expected": [
-    "You had done emission test earlier from our side.",
-    "KA01AB1234"
+  "context": {
+    "salutation": "",
+    "vehicle_number": "KA01AB1234",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": false,
+  "turns": [
+    {
+      "user": "who are you",
+      "expect_reply": "You had done emission test earlier from our side.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "what is my vehicle",
+      "expect_reply": "KA01AB1234",
+      "expect_state": "INITIAL"
+    }
   ]
 }

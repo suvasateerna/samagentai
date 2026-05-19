@@ -1,9 +1,23 @@
 {
   "name": "Callback - customer says ok instead of yes",
-  "salutation": "",
-  "inputs": ["busy", "ok"],
-  "expected": [
-    "Okay, shall I call later?",
-    "Sure, we will call later. Thank you."
+  "context": {
+    "salutation": "",
+    "vehicle_number": "",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": true,
+  "turns": [
+    {
+      "user": "busy",
+      "expect_reply": "Okay, shall I call later?",
+      "expect_state": "CALLBACK_CONFIRMATION"
+    },
+    {
+      "user": "ok",
+      "expect_reply": "Sure, we will call later. Thank you.",
+      "expect_state": "DONE"
+    }
   ]
 }

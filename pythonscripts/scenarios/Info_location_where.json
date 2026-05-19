@@ -1,0 +1,18 @@
+{
+  "name": "INFO_REQUEST_LOCATION_WHERE",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": false,
+  "turns": [
+    {
+      "user": "where is your center",
+      "expect_reply": "Our team will share the location details with you after the call.",
+      "expect_state": "INITIAL"
+    }
+  ]
+}
