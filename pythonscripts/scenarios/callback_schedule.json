@@ -1,5 +1,5 @@
 {
-  "name": "Callback - customer gives specific time",
+  "name": "CALLBACK_SCHEDULE",
   "context": {
     "salutation": "",
     "vehicle_number": "",

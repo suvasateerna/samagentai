@@ -1,5 +1,5 @@
 {
-  "name": "Customer asks who called and vehicle number",
+  "name": "INFO_REQUEST_IDENTITY_VEHICLE",
   "context": {
     "salutation": "",
     "vehicle_number": "KA01AB1234",

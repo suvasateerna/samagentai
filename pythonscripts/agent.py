@@ -52,6 +52,27 @@ def make_session(
     }
 
 
+# ---------------------------------------------------------------------------
+# Rendering helpers
+# Detection stays in state machine. Wording stays in operational script.
+# Rendering stays here.
+# Extraction to renderer.py deferred until 3+ helpers or localization arrives.
+# ---------------------------------------------------------------------------
+
+def render_suspicion_reply(ctx):
+    """
+    Render suspicion handling reply.
+    Personalization gated on personalization_allowed and salutation (DL-007).
+    Wording governed by DL-004.
+
+    With honorific:    "No online payment or anything {honorific}, just informing before expiry."
+    Without honorific: "No online payment or anything, just informing before expiry."
+    """
+    if ctx["personalization_allowed"] and ctx["salutation"]:
+        return f"No online payment or anything {ctx['salutation']}, just informing before expiry."
+    return "No online payment or anything, just informing before expiry."
+
+
 def get_greeting(session):
     """
     Render the opening greeting line.
@@ -127,6 +148,25 @@ def process(user_input, session):
             return reply("No documents required.", STATE_INITIAL)
         elif "location" in words or "address" in words or "where" in words:
             return reply("Our team will share the location details with you after the call.", STATE_INITIAL)
+
+        # --- OBJECTION handlers ---
+        # Non-progressing — answer and remain in current state.
+        # IRRITATION: tone-derived, undetectable by text — out of scope Phase 1.
+        # render_suspicion_reply() is the first rendering helper (DL-004, DL-007).
+        # SUSPICION: "payment" is a future collision hotspot — "online payment available?",
+        # "how much payment?" etc. Acceptable for Phase 1. Revisit at classify_intent() replacement.
+        elif "payment" in words or "spam" in words or "scam" in words or "genuine" in words:
+            return reply(render_suspicion_reply(ctx), STATE_INITIAL)
+        # URGENCY_PUSH: "later" also exists in REJECT_WORDS.
+        # This handler must remain before any rejected-branch handling in STATE_INITIAL.
+        # In STATE_CALLBACK_CONFIRMATION, rejected fires instead — that is correct and intentional.
+        # If STATE_INITIAL ever gains a rejected branch, revisit ordering here immediately.
+        # "later" = deferment, "urgent" = urgency challenge — unified in Phase 1, split expected later.
+        
+        elif "later" in words or "urgent" in words:
+            return reply("Small delay okay\u2026 but if pollution certificate fully expires, later insurance renewal issue can come.", STATE_INITIAL)
+        elif "police" in words or "insurance" in words or "legal" in words or "invalid" in words:
+            return reply("Later renewal or document issue can come. Better to renew before expiry.", STATE_INITIAL)
 
         # --- DISENGAGEMENT: BUSY ---
         elif "busy" in user_input:

@@ -1,5 +1,5 @@
 {
-  "name": "Callback - customer says ok instead of yes",
+  "name": "CALLBACK_OK",
   "context": {
     "salutation": "",
     "vehicle_number": "",

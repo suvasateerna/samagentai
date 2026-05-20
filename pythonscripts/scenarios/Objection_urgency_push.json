@@ -1,0 +1,18 @@
+{
+  "name": "OBJECTION_URGENCY_PUSH",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": false,
+  "turns": [
+    {
+      "user": "can do later no",
+      "expect_reply": "Small delay okay\u2026 but if pollution certificate fully expires, later insurance renewal issue can come.",
+      "expect_state": "INITIAL"
+    }
+  ]
+}

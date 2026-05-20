@@ -1,5 +1,5 @@
 {
-  "name": "Happy path - customer confirms immediately",
+  "name": "HAPPY_PATH_CONFIRMATION",
   "context": {
     "salutation": "",
     "vehicle_number": "KA01AB1234",

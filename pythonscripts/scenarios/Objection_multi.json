@@ -1,0 +1,33 @@
+{
+  "name": "OBJECTION_MULTI_CONFIRMATION",
+  "context": {
+    "salutation": "sir",
+    "vehicle_number": "",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": true,
+  "turns": [
+    {
+      "user": "is this spam",
+      "expect_reply": "No online payment or anything sir, just informing before expiry.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "can do later no",
+      "expect_reply": "Small delay okay\u2026 but if pollution certificate fully expires, later insurance renewal issue can come.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "will insurance become invalid",
+      "expect_reply": "Later renewal or document issue can come. Better to renew before expiry.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "okay",
+      "expect_reply": "Thank you. We will send you the details shortly.",
+      "expect_state": "DONE"
+    }
+  ]
+}

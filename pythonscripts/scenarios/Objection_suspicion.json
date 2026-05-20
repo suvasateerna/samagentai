@@ -1,0 +1,18 @@
+{
+  "name": "OBJECTION_SUSPICION",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": false,
+  "turns": [
+    {
+      "user": "is this spam",
+      "expect_reply": "No online payment or anything, just informing before expiry.",
+      "expect_state": "INITIAL"
+    }
+  ]
+}

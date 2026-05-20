@@ -373,3 +373,62 @@ The following areas are NOT explicitly defined in the current script and therefo
 - exact definition of “reliable” variable confidence.
 
 These areas require separate documentation if needed.
+
+## DL-011 — Urgency push soft framing
+
+### Scope Tags
+
+- Escalation / De-escalation
+- Risk-Sensitive Wording
+
+### Accepted Wording
+
+> "Small delay okay… but if pollution certificate fully expires, later insurance renewal issue can come."
+
+### Rejected Alternatives
+
+- "You must renew immediately"
+- "Delay will cause problems"
+- "Don't wait too long"
+
+### Reasoning
+
+Acknowledges customer's deferment intent without dismissing the renewal need.
+Keeps expiry consequence framing soft and probabilistic per DL-005.
+Preserves autonomy per DL-006 while maintaining the preventive action anchor.
+
+### Related Entries
+
+- DL-005 — Soft consequence framing
+- DL-006 — Customer autonomy preservation
+
+---
+
+## DL-012 — Legal query safe framing
+
+### Scope Tags
+
+- Escalation / De-escalation
+- Risk-Sensitive Wording
+
+### Accepted Wording
+
+> "Later renewal or document issue can come. Better to renew before expiry."
+
+### Rejected Alternatives
+
+- "Insurance becomes invalid"
+- "Claims will be rejected"
+- "Police will check"
+- "This is legally required"
+
+### Reasoning
+
+Broadens consequence framing beyond insurance specifically to avoid legally assertive claims.
+Stays within soft probabilistic framing per DL-005.
+Does not imply regulatory authority or enforcement power.
+
+### Related Entries
+
+- DL-005 — Soft consequence framing
+- DL-004 — Non-threatening handling of suspicion

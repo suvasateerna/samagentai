@@ -405,6 +405,34 @@ Repeated authenticity or privacy challenges SHOULD trigger escalation handling u
 
 ---
 
+## 9.7 Urgency Push Handling
+
+Principles:
+
+- soft consequence framing (DL-005)
+- preserve customer autonomy (DL-006)
+- keep expiry anchor without pressure
+- no absolute claims
+
+Baseline reply:
+
+> "Later issue can come. Better to do before expiry whenever convenient."
+
+---
+
+## 9.8 Legal Query Handling
+
+Principles:
+
+- soft consequence framing (DL-005)
+- no legal claims, no regulatory authority
+- broader than insurance — covers renewal and documents
+- preserve autonomy, recommend pre-expiry action
+
+Baseline reply:
+
+> "Later renewal or document issue can come. Better to renew before expiry."
+
 # 10. FC Expiry Handling
 
 ## 10.1 Activation Condition
