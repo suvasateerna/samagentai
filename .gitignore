@@ -4,3 +4,5 @@ private vapi key.txt
 .env
 venv/
 .venv/
+transcripts/
+*.log

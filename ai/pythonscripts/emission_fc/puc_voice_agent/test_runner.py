@@ -5,8 +5,10 @@
 import json
 import os
 from agent import get_greeting, process, make_session
+from pathlib import Path
 
-SCENARIOS_DIR = "scenarios"
+BASE_DIR = Path(__file__).resolve().parent
+SCENARIOS_DIR = BASE_DIR / "scenarios"
 
 
 def run_scenario(scenario):
