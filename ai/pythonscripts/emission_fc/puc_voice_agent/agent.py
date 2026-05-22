@@ -42,6 +42,7 @@ def make_session(
     """
     return {
         "state": state,
+        "greeted": False,
         "context": {
             "salutation":              salutation,
             "vehicle_number":          vehicle_number,
@@ -110,6 +111,7 @@ def process(user_input, session):
             session  (dict) : updated session object (state may have changed)
             end_call (bool) : True if conversation should terminate
     """
+    normalized_input = user_input.strip().lower()
     user_input = user_input.lower().strip()
     words      = {w.strip(".,!?;:'\"") for w in user_input.split()}
     confirmed  = bool(words & CONFIRM_WORDS)
@@ -171,6 +173,9 @@ def process(user_input, session):
         # --- DISENGAGEMENT: BUSY ---
         elif "busy" in user_input:
             return reply("Okay, shall I call later?", STATE_CALLBACK_CONFIRMATION)
+        # --- GREETING / ACKNOWLEDGEMENT ---
+        elif normalized_input in ["hello", "hi", "hey"]:
+            return reply("Your emission test is pending. Would you like to renew it now?", STATE_INITIAL)
         else:
             return reply(UNKNOWN_INPUT, STATE_INITIAL)
 

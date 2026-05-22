@@ -26,6 +26,10 @@ app = Flask(__name__)
 @app.route("/chat/completions", methods=["POST"])
 def chat_completions():
     payload = request.get_json(force=True)
+    log.info(json.dumps({
+    "event": "raw_payload",
+    "payload": payload
+}))
 
     call_id = (
         payload.get("call", {}).get("id")
@@ -49,8 +53,10 @@ def chat_completions():
     session = get_session(call_id)
     state_before = session.get("state", "unknown")
 
+    # ── Run through state machine ─────────────────────────────────────────────
     try:
         result = process(user_input, session)
+        
     except Exception as e:
         log.error(json.dumps({
             "event": "process_error",
@@ -64,6 +70,11 @@ def chat_completions():
         reply_text = "I'm sorry, I encountered an issue. Let me transfer you to our team."
         end_call = False
         result = {"reply": reply_text, "end_call": end_call, "session": session}
+    logging.info(json.dumps({
+    "event": "end_call_debug",
+    "call_id": call_id,
+    "end_call": result.get("end_call")
+}))
 
     if isinstance(result, dict):
         reply_text = result.get("reply", "")
@@ -99,7 +110,17 @@ def chat_completions():
                 "index": 0,
                 "message": {
                     "role": "assistant",
-                    "content": reply_text
+                    "content": reply_text,
+                    "tool_calls": [
+        {
+            "id": "call_end_1",
+            "type": "function",
+            "function": {
+                "name": "end_call_tool",
+                "arguments": "{}"
+            }
+        }
+    ]
                 },
                 "finish_reason": "stop"
             }]
@@ -137,7 +158,32 @@ def chat_completions():
             }]
         }) + "\n\n"
 
-        # 3. Finish chunk
+        # 3. Tool call chunk
+        if end_call:
+            yield "data: " + json.dumps({
+                "id": chunk_id,
+                "object": "chat.completion.chunk",
+                "created": created,
+                "model": "agent",
+                "choices": [{
+                    "index": 0,
+                    "delta": {
+                        "tool_calls": [{
+                            "index": 0,
+                            "id": "call_end_1",
+                            "type": "function",
+                            "function": {
+                                "name": "end_call_tool",
+                                "arguments": "{}"
+                            }
+                        }]
+                    },
+                    "finish_reason": None
+                }]
+            }) + "\n\n"
+
+        # 4. Finish chunk
+        
         yield "data: " + json.dumps({
             "id": chunk_id,
             "object": "chat.completion.chunk",
@@ -150,7 +196,7 @@ def chat_completions():
             }]
         }) + "\n\n"
 
-        # 4. Done
+        # 5. Done
         yield "data: [DONE]\n\n"
 
     return Response(
