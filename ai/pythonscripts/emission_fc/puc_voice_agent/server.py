@@ -6,7 +6,8 @@ Architecture:
     VAPI → POST /chat/completions → server.py → session_manager.py → agent.py → response
 """
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response, stream_with_context
+
 from session_manager import get_session, save_session, append_turn
 from agent import process
 import logging
@@ -22,25 +23,16 @@ log = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-
 @app.route("/chat/completions", methods=["POST"])
 def chat_completions():
-    """
-    VAPI sends an OpenAI-compatible messages array.
-    We extract the latest user utterance, run it through agent.py,
-    and return an OpenAI-compatible response.
-    """
     payload = request.get_json(force=True)
 
-    # ── Extract call/session ID from VAPI metadata ────────────────────────────
-    # VAPI sends call metadata inside the payload
     call_id = (
         payload.get("call", {}).get("id")
         or payload.get("metadata", {}).get("call_id")
         or "unknown"
     )
 
-    # ── Extract latest user utterance ─────────────────────────────────────────
     messages = payload.get("messages", [])
     user_input = ""
     for msg in reversed(messages):
@@ -54,11 +46,9 @@ def chat_completions():
         "user_input": user_input
     }))
 
-    # ── Load or create session ────────────────────────────────────────────────
     session = get_session(call_id)
     state_before = session.get("state", "unknown")
 
-    # ── Run through state machine ─────────────────────────────────────────────
     try:
         result = process(user_input, session)
     except Exception as e:
@@ -71,37 +61,20 @@ def chat_completions():
             "state_before": state_before,
             "error": str(e)
         }))
-        return jsonify({
-            "id": f"chatcmpl-{call_id}",
-            "object": "chat.completion",
-            "created": int(time.time()),
-            "model": "agent",
-            "choices": [{
-                "index": 0,
-                "message": {
-                    "role": "assistant",
-                    "content": "I'm sorry, I encountered an issue. Let me transfer you to our team."
-                },
-                "finish_reason": "stop"
-            }]
-        }), 200
+        reply_text = "I'm sorry, I encountered an issue. Let me transfer you to our team."
+        end_call = False
+        result = {"reply": reply_text, "end_call": end_call, "session": session}
 
-    # result is either:
-    #   a string (agent response text)
-    #   or a dict with {"reply": "...", "end_call": True/False}
     if isinstance(result, dict):
         reply_text = result.get("reply", "")
         end_call   = result.get("end_call", False)
+        session    = result.get("session", session)
     else:
         reply_text = result
         end_call   = False
 
     state_after = session.get("state", "unknown")
-
-    # ── Record turn in transcript ─────────────────────────────────────────────
     append_turn(session, user_input, reply_text, state_before, state_after)
-
-    # ── Persist updated session ───────────────────────────────────────────────
     save_session(call_id, session)
 
     log.info(json.dumps({
@@ -113,25 +86,77 @@ def chat_completions():
         "end_call": end_call
     }))
 
-    # ── Build OpenAI-compatible response ─────────────────────────────────────
-    response_body = {
-        "id": f"chatcmpl-{call_id}",
-        "object": "chat.completion",
-        "created": int(time.time()),
-        "model": "agent",
-        "choices": [
-            {
+    # ── Detect streaming ──────────────────────────────────────────────────────
+    use_stream = payload.get("stream", False)
+
+    if not use_stream:
+        response_body = {
+            "id": f"chatcmpl-{call_id}",
+            "object": "chat.completion",
+            "created": int(time.time()),
+            "model": "agent",
+            "choices": [{
                 "index": 0,
                 "message": {
                     "role": "assistant",
                     "content": reply_text
                 },
                 "finish_reason": "stop"
-            }
-        ]
-    }
+            }]
+        }
+        return jsonify(response_body), 200
 
-    return jsonify(response_body), 200
+    # ── SSE streaming response ────────────────────────────────────────────────
+    chunk_id = f"chatcmpl-{call_id}"
+    created  = int(time.time())
+
+    def generate():
+        # 1. Role chunk
+        yield "data: " + json.dumps({
+            "id": chunk_id,
+            "object": "chat.completion.chunk",
+            "created": created,
+            "model": "agent",
+            "choices": [{
+                "index": 0,
+                "delta": {"role": "assistant"},
+                "finish_reason": None
+            }]
+        }) + "\n\n"
+
+        # 2. Content chunk
+        yield "data: " + json.dumps({
+            "id": chunk_id,
+            "object": "chat.completion.chunk",
+            "created": created,
+            "model": "agent",
+            "choices": [{
+                "index": 0,
+                "delta": {"content": reply_text},
+                "finish_reason": None
+            }]
+        }) + "\n\n"
+
+        # 3. Finish chunk
+        yield "data: " + json.dumps({
+            "id": chunk_id,
+            "object": "chat.completion.chunk",
+            "created": created,
+            "model": "agent",
+            "choices": [{
+                "index": 0,
+                "delta": {},
+                "finish_reason": "stop"
+            }]
+        }) + "\n\n"
+
+        # 4. Done
+        yield "data: [DONE]\n\n"
+
+    return Response(
+        stream_with_context(generate()),
+        mimetype="text/event-stream"
+    )
 
 
 @app.route("/health", methods=["GET"])
