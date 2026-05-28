@@ -1,0 +1,28 @@
+{
+  "name": "FALLBACK_ON_DATA_PRIVACY_QUERY",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": false,
+  "turns": [
+    {
+      "user": "how did you get my number",
+      "expect_reply": "You had done emission test earlier from our side.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "where did you get my number from",
+      "expect_reply": "You had done emission test earlier from our side.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "who gave you my contact",
+      "expect_reply": "You had done emission test earlier from our side.",
+      "expect_state": "INITIAL"
+    }
+  ]
+}

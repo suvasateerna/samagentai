@@ -1,0 +1,28 @@
+{
+  "name": "OBJECTION_DATA_SOURCE_WHERE",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": false,
+  "turns": [
+    {
+      "user": "where did you get my number from",
+      "expect_reply": "You had done emission test earlier from our side.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "where did you get my details from",
+      "expect_reply": "You had done emission test earlier from our side.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "where did you find my contact",
+      "expect_reply": "You had done emission test earlier from our side.",
+      "expect_state": "INITIAL"
+    }
+  ]
+}

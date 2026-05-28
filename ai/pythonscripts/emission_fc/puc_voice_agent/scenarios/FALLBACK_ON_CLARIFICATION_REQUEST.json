@@ -1,0 +1,28 @@
+{
+  "name": "FALLBACK_ON_CLARIFICATION_REQUEST",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": false,
+  "turns": [
+    {
+      "user": "what do you want me to do",
+      "expect_reply": "Pollution certificate only… emission test renewal.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "what is this about",
+      "expect_reply": "Pollution certificate only… emission test renewal.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "why did you call",
+      "expect_reply": "Pollution certificate only… emission test renewal.",
+      "expect_state": "INITIAL"
+    }
+  ]
+}

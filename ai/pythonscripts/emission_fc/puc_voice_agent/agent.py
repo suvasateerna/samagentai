@@ -122,6 +122,7 @@ def process(user_input, session):
 
     def reply(text, new_state, end_call=False):
         updated_session = {
+            **session,
             "state":   new_state,
             "context": ctx,
         }

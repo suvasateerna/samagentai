@@ -1,0 +1,28 @@
+{
+  "name": "FALSE_CONSENT_SURE_IN_INITIAL",
+  "context": {
+    "salutation": "",
+    "vehicle_number": "",
+    "fc_expired": false,
+    "whatsapp_number": "",
+    "personalization_allowed": true
+  },
+  "expect_end_call": false,
+  "turns": [
+    {
+      "user": "sure",
+      "expect_reply": "I'm calling regarding your emission test renewal.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "okay",
+      "expect_reply": "I'm calling regarding your emission test renewal.",
+      "expect_state": "INITIAL"
+    },
+    {
+      "user": "alright",
+      "expect_reply": "I'm calling regarding your emission test renewal.",
+      "expect_state": "INITIAL"
+    }
+  ]
+}
